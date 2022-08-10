@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-messages.js"></script>
+  <script src="lib/angular/angular-locale-pt-br.js"></script>
   <script>
     angular.module("listaTelefonica", ["ngMessages"]);
     angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope) {
@@ -15,11 +16,11 @@
         {nome: "Maria", telefone: "99998866", data: new Date(), operadora: {nome: "Tim", codigo: 41, categoria: "Celular"}}
       ];
       $scope.operadoras = [
-        {nome: "Oi", codigo: 14, categoria: "Celular"},
-        {nome: "Vivo", codigo: 15, categoria: "Celular"},
-        {nome: "Tim", codigo: 41, categoria: "Celular"},
-        {nome: "GVT", codigo: 25, categoria: "Fixo"},
-        {nome: "Embratel", codigo: 21, categoria: "Fixo"}
+        {nome: "Oi", codigo: 14, categoria: "Celular", preco: 100},
+        {nome: "Vivo", codigo: 15, categoria: "Celular", preco: 120},
+        {nome: "Tim", codigo: 41, categoria: "Celular", preco: 110},
+        {nome: "GVT", codigo: 25, categoria: "Fixo", preco: 60},
+        {nome: "Embratel", codigo: 21, categoria: "Fixo", preco: 40}
       ];
       $scope.adicionarContato = function (contato) {
         $scope.contatos.push(angular.copy(contato));
@@ -35,6 +36,10 @@
         return contatos.some(function (contato) {
           return contato.selecionado;
         })
+      };
+      $scope.ordenarPor = function (campo) {
+        $scope.criterioDeOrdenacao = campo;
+        $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
       };
       $scope.classe1 = "selecionado";
       $scope.classe2 = "negrito";
@@ -62,6 +67,9 @@
     .negrito {
       font-weight: bold;
     }
+    hr {
+      border-color: #999;
+    }
   </style>
 </head>
 <body ng-controller="listaTelefonicaCtrl">
@@ -71,12 +79,12 @@
     <table ng-show="contatos.length > 0" class="table">
       <tr>
         <th></th>
-        <th>Nome</th>
-        <th>Telefone</th>
-        <th>Operadora</th>
+        <th><a href="" ng-click="ordenarPor('nome')">Nome</a></th>
+        <th><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
+        <th><a href="" ng-click="ordenarPor('operadora.nome')">Operadora</a></th>
         <th>Data</th>
       </tr>
-      <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:{nome: criterioDeBusca} | orderBy: '-nome'">
+      <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:{nome: criterioDeBusca} | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
         <td>
           <input type="checkbox" ng-model="contato.selecionado"/>
         </td>
@@ -110,7 +118,7 @@
       <select
       class="form-control"
       ng-model="contato.operadora"
-      ng-options="operadora.nome for operadora in operadoras"
+      ng-options="operadora.nome + ' ( ' + (operadora.preco | currency) + ' ) ' for operadora in operadoras | orderBy: 'nome'"
       >
         <option value="">Selecione uma operadora</option>
       </select>
