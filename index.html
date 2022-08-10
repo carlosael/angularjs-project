@@ -10,9 +10,9 @@
     angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope) {
       $scope.app = "Lista Telefonica";
       $scope.contatos = [
-        {nome: "Pedro", telefone: "99998888", cor: "red"},
-        {nome: "Ana", telefone: "99998877", cor: "blue"},
-        {nome: "Maria", telefone: "99998866", cor: "green"}
+        {nome: "Pedro", telefone: "99998888", data: new Date(), operadora: {nome: "Oi", codigo: 14, categoria: "Celular"}},
+        {nome: "Ana", telefone: "99998877", data: new Date(), operadora: {nome: "Vivo", codigo: 15, categoria: "Celular"}},
+        {nome: "Maria", telefone: "99998866", data: new Date(), operadora: {nome: "Tim", codigo: 41, categoria: "Celular"}}
       ];
       $scope.operadoras = [
         {nome: "Oi", codigo: 14, categoria: "Celular"},
@@ -44,7 +44,7 @@
   <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
   <style>
     .jumbotron {
-      width: 400px;
+      width: 600px;
       text-align: center;
       margin-left: auto;
       margin-right: auto;
@@ -67,25 +67,24 @@
 <body ng-controller="listaTelefonicaCtrl">
   <div class="jumbotron">
     <h4>{{app}}</h4>
+    <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?">
     <table ng-show="contatos.length > 0" class="table">
       <tr>
         <th></th>
         <th>Nome</th>
         <th>Telefone</th>
         <th>Operadora</th>
-        <th></th>
+        <th>Data</th>
       </tr>
-      <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+      <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:{nome: criterioDeBusca} | orderBy: '-nome'">
         <td>
           <input type="checkbox" ng-model="contato.selecionado"/>
         </td>
-        <td>{{contato.nome}}</td>
+        <td>{{contato.nome | uppercase}}</td>
         <td>{{contato.telefone}}</td>
         <td>{{contato.operadora.nome}}</td>
-        <td>
-          <div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}">
-          </div>
-        </td>
+        <td>{{contato.data | date:'dd/MM/yyyy'}}</td>
+
       </tr>
     </table>
     <hr/>
@@ -117,24 +116,32 @@
       </select>
     </form>
     <div 
+    ng-show="contatoForm.nome.$dirty"
     ng-messages="contatoForm.nome.$error" 
-    class="alert alert-danger">
-      <div ng-message="required" >
+    >
+      <div ng-message="required" class="alert alert-danger">
         Por favor preencha o campo nome.
       </div>
-      <div ng-message="minlength" >
+      <div ng-message="minlength" class="alert alert-danger">
         O campo nome deve ter no mínimo 10 caracteres.
       </div>
     </div>
-    <div 
-    ng-show="contatoForm.telefone.$error.required && contatoForm.telefone.$dirty" 
-    class="alert alert-danger">
-      Por favor preencha o campo telefone.
-    </div>
-    <div 
-    ng-show="contatoForm.telefone.$error.pattern" 
-    class="alert alert-danger">
-      O campo nome deve ter o formato DDDDD-DDDD.
+    <div
+    ng-show="contatoForm.telefone.$dirty"
+    ng-messages="contatoForm.telefone.$error" 
+    >
+      <div 
+      ng-message="required"
+      class="alert alert-danger"
+      >
+        Por favor preencha o campo telefone.
+      </div>
+      <div 
+      ng-message="pattern"
+      class="alert alert-danger"
+      >
+        O campo nome deve ter o formato DDDDD-DDDD.
+      </div>
     </div>
     <button
     class="btn btn-primary btn-block"
