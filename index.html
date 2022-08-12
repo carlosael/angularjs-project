@@ -11,13 +11,11 @@
     angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope, $http) {
       $scope.app = "Lista Telefonica";
       
-      
       var carregarContatos = function () {
         $http.get("http://localhost:8080/contatos").then(function (response) {
           $scope.contatos = response.data;
         });
       };  
-      carregarContatos();  
 
       var carregarOperadoras = function () {
         $http.get("http://localhost:8080/operadoras").then(function (response) {
@@ -25,14 +23,15 @@
         });
       };  
       
-      carregarOperadoras();
-      
       $scope.contatos = [];
       
       $scope.adicionarContato = function (contato) {
-        $scope.contatos.push(angular.copy(contato));
-        delete $scope.contato;
-        $scope.contatoForm.$setPristine();
+        contato.data = new Date();
+        $http.post("http://localhost:8080/contatos", contato).then(function (response) {
+          delete $scope.contato;
+          $scope.contatoForm.$setPristine();
+          carregarContatos();
+        });
       };
       $scope.apagarContatos = function (contatos) {
         $scope.contatos = contatos.filter(function (contato) {
@@ -50,6 +49,8 @@
       };
       $scope.classe1 = "selecionado";
       $scope.classe2 = "negrito";
+      carregarContatos();  
+      carregarOperadoras();
     })
     </script>
   <title>Lista Telefonica</title>

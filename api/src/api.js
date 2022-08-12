@@ -21,6 +21,16 @@ var operadoras = [
     res.end();
   });
 
+  app.post("/contatos", function(req, res) {
+    var contato = req.body;
+    contatos.push(JSON.parse(contato));
+    res.end();
+  });
+
+  app.options("/contatos", function(req, res) {
+    res.end();
+  });
+
   app.get("/operadoras", function(req, res) {
     res.write(JSON.stringify(operadoras));
     res.end();
