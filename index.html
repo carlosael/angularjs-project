@@ -12,10 +12,20 @@
       $scope.app = "Lista Telefonica";
       
       
-      $http.get("http://localhost:8080/contatos").then(function (response) {
-       $scope.contatos = response.data;
-      });
-        
+      var carregarContatos = function () {
+        $http.get("http://localhost:8080/contatos").then(function (response) {
+          $scope.contatos = response.data;
+        });
+      };  
+      carregarContatos();  
+
+      var carregarOperadoras = function () {
+        $http.get("http://localhost:8080/operadoras").then(function (response) {
+          $scope.operadoras = response.data;
+        });
+      };  
+      
+      carregarOperadoras();
       
       $scope.contatos = [];
       
