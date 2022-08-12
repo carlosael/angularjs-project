@@ -6,84 +6,17 @@
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-messages.js"></script>
   <script src="lib/angular/angular-locale-pt-br.js"></script>
-  <script>
-    angular.module("listaTelefonica", ["ngMessages"]);
-    angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope, $http) {
-      $scope.app = "Lista Telefonica";
-      
-      var carregarContatos = function () {
-        $http.get("http://localhost:8080/contatos").then(function (response) {
-          $scope.contatos = response.data;
-        });
-      };  
-
-      var carregarOperadoras = function () {
-        $http.get("http://localhost:8080/operadoras").then(function (response) {
-          $scope.operadoras = response.data;
-        });
-      };  
-      
-      $scope.contatos = [];
-      
-      $scope.adicionarContato = function (contato) {
-        contato.data = new Date();
-        $http.post("http://localhost:8080/contatos", contato).then(function (response) {
-          delete $scope.contato;
-          $scope.contatoForm.$setPristine();
-          carregarContatos();
-        });
-      };
-      $scope.apagarContatos = function (contatos) {
-        $scope.contatos = contatos.filter(function (contato) {
-          if (!contato.selecionado) return contato;
-        });
-      };
-      $scope.isContatoSelecionado = function (contatos) {
-        return contatos.some(function (contato) {
-          return contato.selecionado;
-        })
-      };
-      $scope.ordenarPor = function (campo) {
-        $scope.criterioDeOrdenacao = campo;
-        $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
-      };
-      $scope.classe1 = "selecionado";
-      $scope.classe2 = "negrito";
-      carregarContatos();  
-      carregarOperadoras();
-    })
-    </script>
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/app.js"></script>
+  <script src="js/controllers/listaTelefonicaCtrl.js"></script>
   <title>Lista Telefonica</title>
   <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
-  <style>
-    .jumbotron {
-      width: 600px;
-      text-align: center;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 20px;
-    }
-    .table {
-      margin-top: 20px;
-    }
-    .form-control {
-      margin-bottom: 5px;
-    }
-    .selecionado {
-      background-color: yellow;
-    }
-    .negrito {
-      font-weight: bold;
-    }
-    hr {
-      border-color: #999;
-    }
-  </style>
 </head>
 <body ng-controller="listaTelefonicaCtrl">
   <div class="jumbotron">
     <h4>{{app}}</h4>
     <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?">
+    {{error}}
     <table ng-show="contatos.length > 0" class="table">
       <tr>
         <th></th>
@@ -173,6 +106,6 @@
     Apagar contatos
     </button>
   </div>
-  <div ng-include="'footer.html'"></div>
+  <div ng-include="'view/footer.html'"></div>
 </body>
 </html>
