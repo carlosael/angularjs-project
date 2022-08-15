@@ -1,7 +1,6 @@
-angular.module("listaTelefonica").factory("operadorasAPI", function ($http) {
-    var _urlBase = "http://localhost:8080/operadoras";
+angular.module("listaTelefonica").factory("operadorasAPI", function ($http, config) {
     var _getOperadoras = function () {
-        return $http.get(_urlBase);
+        return $http.get(config.baseUrl + "/operadoras");
     };
     return {
         getOperadoras: _getOperadoras

@@ -1,17 +1,16 @@
-angular.module("listaTelefonica").factory("contatosAPI", function ($http) {
-    var _urlBase = "http://localhost:8080/contatos";
+angular.module("listaTelefonica").factory("contatosAPI", function ($http, config) {
     var _getContatos = function () {
-        return $http.get(_urlBase);
+        return $http.get(config.baseUrl + "/contatos");
     };
     
     var _getContato = function (id) {
-        return $http.get(_urlBase + "/" + id);
+        return $http.get(config.baseUrl + "/" + id);
     };
     var _saveContato = function (contato) {
-        return $http.post(_urlBase, contato);
+        return $http.post(config.baseUrl + "/contatos", contato);
     };
     var _deleteContato = function (id) {
-        return $http.delete(_urlBase + "/" + id);
+        return $http.delete(config.baseUrl + "/" + id);
     };
     return {
         getContatos: _getContatos,
