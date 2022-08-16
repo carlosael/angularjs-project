@@ -5,7 +5,7 @@ var app = router(8080);
 var contatos = [
   {serial: 'PQS2(', nome: "Pedro gurgel", telefone: "99998888", data: new Date(), operadora: {nome: "Oi", codigo: 14, categoria: "Celular"}},
   {serial: '234E%', nome: "ana furtado", telefone: "99998877", data: new Date(), operadora: {nome: "Vivo", codigo: 15, categoria: "Celular"}},
-  {serial: '654GT', nome: "Maria DE PAULA", telefone: "99998866", data: new Date(), operadora: {nome: "Tim", codigo: 41, categoria: "Celular"}}
+  {serial: '654GT', nome: "Maria DE ARRUDA", telefone: "99998866", data: new Date(), operadora: {nome: "Tim", codigo: 41, categoria: "Celular"}}
 ];
 
 var operadoras = [

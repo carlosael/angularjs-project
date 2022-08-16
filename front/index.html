@@ -1,12 +1,11 @@
 <html lang="en" ng-app="listaTelefonica">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/ui.css">
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-messages.js"></script>
   <script src="lib/angular/angular-locale-pt-br.js"></script>
-  <link rel="stylesheet" href="css/app.css">
   <script src="js/app.js"></script>
   <script src="js/controllers/listaTelefonicaCtrl.js"></script>
   <script src="js/services/contatosAPIService.js"></script>
@@ -14,17 +13,21 @@
   <script src="js/values/configValue.js"></script>
   <script src="js/services/serialGeneratorService.js"></script>
   <script src="js/config/serialGeneratorConfig.js"></script>
-  <script src="filters/nameFilter.js"></script>
-
-
+  <script src="js/filters/nameFilter.js"></script>
+  <script src="js/filters/ellipsisFilter.js"></script>
+  <script src="js/directives/uiAlertDirective.js"></script>
   <title>Lista Telefonica</title>
   <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
 </head>
 <body ng-controller="listaTelefonicaCtrl">
   <div class="jumbotron">
     <h4>{{app}}</h4>
+
+    <ui-alert title="Ops, aconteceu um problema!" message="error">
+      {{error}}
+    </ui-alert>
+   
     <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?">
-    {{error}}
     <table ng-show="contatos.length > 0" class="table">
       <tr>
         <th></th>
@@ -39,7 +42,7 @@
           <input type="checkbox" ng-model="contato.selecionado"/>
         </td>
         <td>{{contato.serial}}</td>
-        <td>{{contato.nome | name}}</td>
+        <td>{{contato.nome | name | ellipsis: 12}}</td>
         <td>{{contato.telefone}}</td>
         <td>{{contato.operadora.nome}}</td>
         <td>{{contato.data | date:'dd/MM/yyyy'}}</td>
