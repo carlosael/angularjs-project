@@ -16,17 +16,16 @@
   <script src="js/filters/nameFilter.js"></script>
   <script src="js/filters/ellipsisFilter.js"></script>
   <script src="js/directives/uiAlertDirective.js"></script>
+  <script src="js/directives/uiDateDirective.js"></script>
   <title>Lista Telefonica</title>
   <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
 </head>
 <body ng-controller="listaTelefonicaCtrl">
   <div class="jumbotron">
     <h4>{{app}}</h4>
-
-    <ui-alert title="Ops, aconteceu um problema!" message="error">
+    <ui-alert title="Ops, aconteceu um problema!" message="error" ng-show="error">
       {{error}}
     </ui-alert>
-   
     <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?">
     <table ng-show="contatos.length > 0" class="table">
       <tr>
@@ -67,6 +66,13 @@
       placeholder="Telefone"
       ng-required="true"
       ng-pattern="/^\d{4,5}-\d{4}$/"
+      >
+      <input
+      name="data"
+      class="form-control"
+      ng-model="contato.data"
+      placeholder="Data"
+      ui-date
       >
       <select
       class="form-control"
