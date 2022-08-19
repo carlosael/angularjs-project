@@ -26,34 +26,7 @@
   </table>
   <hr/>
   <a href="#!/novoContato" class="btn btn-primary btn-block">Novo contato</a>
-  <div 
-  ng-show="contatoForm.nome.$dirty"
-  ng-messages="contatoForm.nome.$error" 
-  >
-    <div ng-message="required" class="alert alert-danger">
-      Por favor preencha o campo nome.
-    </div>
-    <div ng-message="minlength" class="alert alert-danger">
-      O campo nome deve ter no mínimo 10 caracteres.
-    </div>
-  </div>
-  <div
-  ng-show="contatoForm.telefone.$dirty"
-  ng-messages="contatoForm.telefone.$error" 
-  >
-    <div 
-    ng-message="required"
-    class="alert alert-danger"
-    >
-      Por favor preencha o campo telefone.
-    </div>
-    <div 
-    ng-message="pattern"
-    class="alert alert-danger"
-    >
-      O campo nome deve ter o formato DDDDD-DDDD.
-    </div>
-  </div>
+ 
   
   <button
   class="btn btn-danger btn-block"
