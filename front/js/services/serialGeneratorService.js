@@ -14,8 +14,12 @@ angular.module("listaTelefonica").provider("serialGenerator", function () {
     }
     return {
       generate: function () {
-        return _serial;
-      }
+				var serial = "";
+				while(serial.length < _length) {
+					serial += String.fromCharCode(Math.floor(Math.random() * 64) + 32);
+				}
+				return serial;
+			}
     };
   };
 });

@@ -4,7 +4,7 @@ angular.module("listaTelefonica").factory("contatosAPI", function ($http, config
     };
     
     var _getContato = function (id) {
-        return $http.get(config.baseUrl + "/" + id);
+        return $http.get(config.baseUrl + "/contatos/" + id);
     };
     var _saveContato = function (contato) {
         return $http.post(config.baseUrl + "/contatos", contato);

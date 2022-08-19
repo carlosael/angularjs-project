@@ -18,7 +18,7 @@
         <input type="checkbox" ng-model="contato.selecionado"/>
       </td>
       <td>{{contato.serial}}</td>
-      <td>{{contato.nome | name | ellipsis: 12}}</td>
+      <td><a href="#!/detalhesContato/{{contato.id}}">{{contato.nome | name}}</a></td>
       <td>{{contato.telefone}}</td>
       <td>{{contato.operadora.nome}}</td>
       <td>{{contato.data | date:'dd/MM/yyyy'}}</td>
