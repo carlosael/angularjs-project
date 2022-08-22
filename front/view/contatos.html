@@ -3,7 +3,7 @@
   <ui-alert title="Ops, aconteceu um problema!" message="error" ng-show="error">
     {{error}}
   </ui-alert>
-  <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?">
+  <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?" ng-model-options="{updateOn: 'default blur', debounce:{default: 500, blur: 0}}">
   <table ng-show="contatos.length > 0" class="table">
     <tr>
       <th></th>
@@ -17,11 +17,11 @@
       <td>
         <input type="checkbox" ng-model="contato.selecionado" ng-selected="verificaContatoSelecionado(contatos)"/>
       </td>
-      <td>{{contato.serial}}</td>
+      <td>{{::contato.serial}}</td>
       <td><a href="#!/detalhesContato/{{contato.id}}">{{contato.nome | name}}</a></td>
-      <td>{{contato.telefone}}</td>
-      <td>{{contato.operadora.nome}}</td>
-      <td>{{contato.data | date:'dd/MM/yyyy'}}</td>
+      <td>{{::contato.telefone}}</td>
+      <td>{{::contato.operadora.nome}}</td>
+      <td>{{::contato.data | date:'dd/MM/yyyy'}}</td>
     </tr>
   </table>
   <hr/>
