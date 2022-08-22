@@ -15,7 +15,7 @@
     </tr>
     <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:{nome: criterioDeBusca} | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
       <td>
-        <input type="checkbox" ng-model="contato.selecionado"/>
+        <input type="checkbox" ng-model="contato.selecionado" ng-selected="verificaContatoSelecionado(contatos)"/>
       </td>
       <td>{{contato.serial}}</td>
       <td><a href="#!/detalhesContato/{{contato.id}}">{{contato.nome | name}}</a></td>
@@ -27,11 +27,10 @@
   <hr/>
   <a href="#!/novoContato" class="btn btn-primary btn-block">Novo contato</a>
  
-  
   <button
   class="btn btn-danger btn-block"
   ng-click="apagarContatos(contatos)"
-  ng-if="isContatoSelecionado(contatos)"
+  ng-if="hasContatoSelecionado"
   >
   Apagar contatos
   </button>

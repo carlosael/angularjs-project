@@ -1,6 +1,7 @@
 angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope, serialGenerator, contatosAPI) {
   $scope.app = "Lista Telefonica";
   $scope.contatos = [];
+  $scope.hasContatoSelecionado = false;
   
   var carregarContatos = function () {
     contatosAPI.getContatos().then(function (response) {
@@ -21,8 +22,8 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($s
       if (!contato.selecionado) return contato;
     });
   };
-  $scope.isContatoSelecionado = function (contatos) {
-    return contatos.some(function (contato) {
+  $scope.verificaContatoSelecionado = function (contatos) {
+    $scope.hasContatoSelecionado = contatos.some(function (contato) {
       return contato.selecionado;
     })
   };
